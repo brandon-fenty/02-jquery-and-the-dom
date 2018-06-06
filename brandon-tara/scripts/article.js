@@ -8,6 +8,12 @@ let articles = [];
 function Article (rawDataObj) {
   // TODO: Use the JS object that is passed in to complete this constructor function:
   // Save ALL the properties of `rawDataObj` into `this`
+  this.title = rawDataObj.title;
+  this.category = rawDataObj.category;
+  this.author = rawDataObj.author;
+  this.authorUrl = rawDataObj.authorUrl;
+  this.publishedOn = rawDataObj.publishedOn;
+  this.body = rawDataObj.body;
 }
 
 Article.prototype.toHtml = function() {
@@ -27,6 +33,13 @@ Article.prototype.toHtml = function() {
       3. article title,
       4. article body, and
       5. publication date. */
+    
+  $newArticle.find('body > main > section > article > header > h1').text(this.title);
+  $newArticle.append('<h1>');
+  $newArticle.find('body > main > section > article > header > div > address> a').text(this.author).attr('href', this.authorUrl);
+  $newArticle.append('<a>');
+  $newArticle.find('.article-body').text(this.body);
+  $newArticle.append('<p>');
 
   // REVIEW: Display the date as a relative number of 'days ago'
   $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
@@ -45,6 +58,6 @@ for(let i = 0; i < rawData.length; i++) {
   articles.push(new Article(rawData[i]));
 }
 
-for(let i = 0; i < articles.length; i++) {
-  $('#articles').append(articles[i].toHtml());
-}
+// for(let i = 0; i < articles.length; i++) {
+//   $('#articles').append(articles[i].toHtml());
+// }
